@@ -1,0 +1,5 @@
+﻿  pch.cpp
+  dllmain.cpp
+    正在创建库 X:\Users\Miraculous_B\source\repos\Dll1\Release\Dll1.lib 和对象 X:\Users\Miraculous_B\source\repos\Dll1\Release\Dll1.exp
+dllmain.obj : error LNK2001: 无法解析的外部符号 __imp__MessageBoxA@16
+X:\Users\Miraculous_B\source\repos\Dll1\Release\Dll1.dll : fatal error LNK1120: 1 个无法解析的外部命令
