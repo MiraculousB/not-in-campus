@@ -1,0 +1,9 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 中间目录(x64\Release\)包含从另一个项目(Dll1.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  dllmain.cpp
+    正在创建库 C:\Users\123\source\repos\Dll1\x64\Release\ProxyHandle.lib 和对象 C:\Users\123\source\repos\Dll1\x64\Release\ProxyHandle.exp
+  正在生成代码
+  2 of 86 functions ( 2.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Dll1.vcxproj -> C:\Users\123\source\repos\Dll1\x64\Release\ProxyHandle.dll
