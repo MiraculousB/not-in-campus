@@ -5,8 +5,8 @@
 	request.setCharacterEncoding("utf-8");
 	Class.forName("com.mysql.jdbc.Driver");
 	String url = "jdbc:mysql://localhost:3306/book?characterEncoding=UTF-8";
-	String user = "user";
-	String password = "123456";
+	String user = "xxx";
+	String password = "xxx";
 	Connection conn = null;
 	conn = DriverManager.getConnection(url, user, password);
 	String t = request.getParameter("token");

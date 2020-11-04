@@ -2,6 +2,10 @@ import time
 import requests
 import json
 import pymysql
+import smtplib #smtp服务器
+from email.mime.text import MIMEText #邮件文本
+ 
+
 
 unsign = -10
 register_success = 0
@@ -18,17 +22,33 @@ headers={\
 }
 
 
+#邮件构建
+def sendemail(receiver,content):
+    subject = "我不在校园"#邮件标题
+    sender = "13144266321@163.com"#发送方
+    recver = receiver #接收方
+    password = "CTHECSKYCMLUJRMK"
+    message = MIMEText(content,"plain","utf-8")
+    #content 发送内容     "plain"文本格式   utf-8 编码格式
+    message['Subject'] = subject #邮件标题
+    message['To'] = recver #收件人
+    message['From'] = sender #发件人
+    smtp = smtplib.SMTP_SSL("smtp.163.com",994) #实例化smtp服务器
+    smtp.login(sender,password)#发件人登录
+    smtp.sendmail(sender,[recver],message.as_string()) #as_string 对 message 的消息进行了封装
+    smtp.close()
+
 def log(printsrt):
     strtime = time.strftime('%H:%M:%S', time.localtime(time.time()))
     strday = "RUNLOG-"+time.strftime('%Y-%m-%d', time.localtime(time.time()))+".txt"
     print(strtime + "  " + str(printsrt))
-    with open (strday,"a",encoding='utf-8') as logg:
+    with open ("/home/autopost/"+strday,"a",encoding='utf-8') as logg:
         logg.write(strtime+"  "+str(printsrt)+"\n")
 
 def getnowtime():
     strtime = time.strftime('%H', time.localtime(time.time()))
     strtime = int(strtime)
-    if(strtime==0):
+    if(strtime<=10):
         return "1"
     if(strtime>=11 and strtime<=15):
         return "2"
@@ -37,8 +57,8 @@ def getnowtime():
 
 def main():
     db_config = {
-        'user': 'xxx',
-        'password': 'xxx',
+        'user': 'user',
+        'password': '123456',
         'db': 'book',
         'charset':'utf8'
     }
@@ -49,20 +69,20 @@ def main():
     cur = con.cursor()
     try:
         # 执行sql语句，不会返回结果，返回其影响的行数
-        cur.execute("select * from id_name")
+        cur.execute("select sno,token,email from stu_info")
         # 获取结果
         values = cur.fetchall()
         for value in values:
             status = postFormRegister(value[1],curseq)
             if(status==unsign):
-                cur.execute("delete from id_name where id =" + value[0])
-                log("id:" + value[0] + "token outdated")
+                log("id:" + value[0] + " status: token outdated")
+                sendemail(value[2],"Token信息已过期，请及时更新")
             elif(status==undefineError):
-                log("id:" + value[0] + "undefineError")
-                cur.execute("delete from id_name where id =" + value[0])
+                sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
+                log("id:" + value[0] + " status: undefineError")
                 # send_email_to_master
             elif(status==register_success):
-                log("id:"+value[0]+"register success")
+                log("id:"+value[0]+" status: register success")
         # 提交到数据库，真正把数据插入或者更新到数据
         con.commit()
     except Exception as e:
@@ -94,7 +114,8 @@ def postFormRegister(mysql_token,ctime):
         log(e)
         #print(e)
 
-
+def postFormNightlocate(mysql_token):
+    headers['token']=mysql_token
 
 
 #res = requests.post(url=url,data=data,headers=headers)
