@@ -25,9 +25,9 @@ headers={\
 #邮件构建
 def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
-    sender = "13144266321@163.com"#发送方
+    sender = "xx@163.com"#发送方
     recver = receiver #接收方
-    password = "CTHECSKYCMLUJRMK"
+    password = "xx"
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
