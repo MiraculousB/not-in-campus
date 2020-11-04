@@ -11,7 +11,7 @@ register_success = 0
 undefineError = -100
 
 url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
-url_locate = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json?page=1&size=5"
+url_locate = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
 data ='{"id": "243827894752446733","signId": "243827893926168576","latitude": 23.090164,"longitude": 113.354053,"country": "中国","province": "广东省","city": "广州市","district": "海珠区","township": "官洲街道"}'
 listdata = "page=1&size=5"
 headers={\
@@ -29,9 +29,9 @@ headers_locate={\
 }
 def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
-    sender = "xx@163.com"#发送方
+    sender = "13144266321@163.com"#发送方
     recver = receiver #接收方
-    password = "xx"
+    password = "CTHECSKYCMLUJRMK"
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
@@ -54,8 +54,9 @@ def postFormNightlocate(mysql_token):
     headers_locate['token']=mysql_token
     res = requests.post(url=url_locate,data=listdata,headers=headers_locate)
     dict_json = json.loads(res.text)
-    id= dict_json["data"][0]["id"]
-    signid= dict_json["data"][0]["logId"]
+    id= dict_json["data"][0]["logId"]
+    signid= dict_json["data"][0]["id"]
+    print(id,signid)
     realdata = data.replace("243827894752446733",id)
     realdata = realdata.replace("243827893926168576",signid)
     realdata = str(realdata).encode('utf-8')
@@ -95,7 +96,7 @@ def main():
                 sendemail(email,"Token已过期，请及时上传。")
             elif(status==undefineError):
                 log("id:" + value[0] + " status: undefineError")
-                sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
+                #sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
                 # send_email_to_master
             elif(status==register_success):
                 log("id:"+value[0]+" status: register success")
