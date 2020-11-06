@@ -18,7 +18,7 @@ def log(printsrt):
     strtime = time.strftime('%H:%M:%S', time.localtime(time.time()))
     strday = "RUNLOG-"+time.strftime('%Y-%m-%d', time.localtime(time.time()))+".txt"
     print(strtime + "  " + str(printsrt))
-    with open (strday,"a",encoding='utf-8') as logg:
+    with open ("/home/autopost/"+strday,"a",encoding='utf-8') as logg:
         logg.write(strtime+"  "+str(printsrt)+"\n")
 
 def postFormNightlocate(mysql_token):
@@ -66,15 +66,17 @@ def main():
             res = tmpcur.fetchall()
             if(len(res)):
                 cur_info.execute("update stu_info set token="+"'"+value[1]+"'"+"where sno="+"'"+info_dict["data"]["number"]+"'")
+                cur_info.execute("update stu_info set sendemail="+"'"+"1"+"'"+"where sno="+"'"+info_dict["data"]["number"]+"'")
                 cur.execute("delete from id_name where id =" + value[0])
             else:
-                query = 'insert into stu_info(sno, email, name, phone, token) values(%s, %s, %s, %s, %s)'
+                query = 'insert into stu_info(sno, email, name, phone, token,sendemail) values(%s, %s, %s, %s, %s,%s)'
                 sno = info_dict["data"]["number"]
                 email = info_dict["data"]["email"]
                 name = info_dict["data"]["name"]
                 phone =  info_dict["data"]["phone"]
                 token = value[1]
-                values = (sno, email, name, phone, token)
+                sendemail = "1"
+                values = (sno, email, name, phone, token,sendemail)
                 cur_info.execute(query, values)
                 cur.execute("delete from id_name where id =" + value[0])
         # 提交到数据库，真正把数据插入或者更新到数据

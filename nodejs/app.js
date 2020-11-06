@@ -12,26 +12,24 @@ const IEDll = new ffi.Library('ProxyHandle.dll', {
 
 const exec = require('child_process').exec;
 
-if (!AnyProxy.utils.certMgr.ifRootCAFileExists()) {
-  AnyProxy.utils.certMgr.generateRootCA((error, keyPath) => {
-    // let users to trust this CA before using proxy
-    if (!error) {
-      const certDir = require('path').dirname(keyPath);
-      const isWin = /^win/.test(process.platform);
-      fs.copyFile(`${certDir}\\rootCA.crt`,'./rootCA.crt',function(err){
-        if(err) console.log('something wrong was happened')
-        else console.log('copy rootCA succeed');
-    })
-    } else {
-      console.error('error when generating rootCA', error);
-    }
-  });
-}
+AnyProxy.utils.certMgr.generateRootCA((error, keyPath) => {
+  // let users to trust this CA before using proxy
+  if (!error) {
+    const certDir = require('path').dirname(keyPath);
+    const isWin = /^win/.test(process.platform);
+    fs.copyFile(`${certDir}\\rootCA.crt`,'./rootCA.crt',function(err){
+      if(err) console.log('something wrong was happened')
+      else console.log('copy rootCA succeed');
+  })
+  } else {
+    console.error('error when generating rootCA', error);
+  }
+});
 
 nodeCmd.run('InstallAccess');
 
 const options = {
-    port: 8001,
+    port: 8003,
     rule: require('./myRuleModule'),
     webInterface: {
         enable: true,

@@ -27,7 +27,7 @@ def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
     sender = "xx@163.com"#发送方
     recver = receiver #接收方
-    password = "xx"
+    password = "口令"
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
@@ -69,20 +69,23 @@ def main():
     cur = con.cursor()
     try:
         # 执行sql语句，不会返回结果，返回其影响的行数
-        cur.execute("select sno,token,email from stu_info")
+        cur.execute("select sno,token,email,sendemail from stu_info")
         # 获取结果
         values = cur.fetchall()
         for value in values:
             status = postFormRegister(value[1],curseq)
             if(status==unsign):
                 log("id:" + value[0] + " status: token outdated")
-                sendemail(value[2],"Token信息已过期，请及时更新")
+                if(value[3]=='1'):
+                    sendemail(value[2],"Token信息已过期，请及时更新,注意上传token时等待脚本自动退出，否则可能上传失败")
+                    cur.execute("update stu_info set sendemail="+"'"+"0"+"'"+"where sno="+"'"+value[0]+"'")
             elif(status==undefineError):
                 sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
                 log("id:" + value[0] + " status: undefineError")
                 # send_email_to_master
             elif(status==register_success):
                 log("id:"+value[0]+" status: register success")
+                #sendemail(value[2],"邮件发送测试")
         # 提交到数据库，真正把数据插入或者更新到数据
         con.commit()
     except Exception as e:

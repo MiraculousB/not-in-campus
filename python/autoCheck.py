@@ -29,9 +29,9 @@ headers_locate={\
 }
 def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
-    sender = "13144266321@163.com"#发送方
+    sender = "xx@163.com"#发送方
     recver = receiver #接收方
-    password = "CTHECSKYCMLUJRMK"
+    password = "口令"
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
@@ -50,16 +50,21 @@ def log(printsrt):
         logg.write(strtime+"  "+str(printsrt)+"\n")
 
 def postFormNightlocate(mysql_token):
-    headers['token']=mysql_token
-    headers_locate['token']=mysql_token
-    res = requests.post(url=url_locate,data=listdata,headers=headers_locate)
-    dict_json = json.loads(res.text)
-    id= dict_json["data"][0]["logId"]
-    signid= dict_json["data"][0]["id"]
-    print(id,signid)
-    realdata = data.replace("243827894752446733",id)
-    realdata = realdata.replace("243827893926168576",signid)
-    realdata = str(realdata).encode('utf-8')
+    try:
+        headers['token']=mysql_token
+        headers_locate['token']=mysql_token
+        res = requests.post(url=url_locate,data=listdata,headers=headers_locate)
+        dict_json = json.loads(res.text)
+        if(dict_json['code']==-10):
+            return unsign
+        id= dict_json["data"][0]["logId"]
+        signid= dict_json["data"][0]["id"]
+        #print(id,signid)
+        realdata = data.replace("243827894752446733",id)
+        realdata = realdata.replace("243827893926168576",signid)
+        realdata = str(realdata).encode('utf-8')
+    except Exception as e:
+        log(e)
     try:
         res = requests.get(url=url, data=realdata, headers=headers)
         dict_json = json.loads(res.text)
@@ -71,8 +76,7 @@ def postFormNightlocate(mysql_token):
             log(res.text)
             return undefineError
     except Exception as e:
-        #log(e)
-        print(e)
+        log(e)
 def main():
     db_config = {
         'user': 'user',
@@ -86,24 +90,25 @@ def main():
     cur = con.cursor()
     try:
         # 执行sql语句，不会返回结果，返回其影响的行数
-        cur.execute("select sno,token,email from stu_info")
+        cur.execute("select sno,token,email,sendemail from stu_info")
         # 获取结果
         values = cur.fetchall()
         for value in values:
             status = postFormNightlocate(value[1])
             if(status==unsign):
                 log("id:" + value[0] + " status: token outdated")
-                sendemail(email,"Token已过期，请及时上传。")
+                if(value[3]=='1'):
+                    sendemail(value[2],"Token信息已过期，请及时更新, 注意上传token时等待脚本自动退出，否则可能上传失败")
+                    cur.execute("update stu_info set sendemail="+"'"+"0"+"'"+"where sno="+"'"+value[0]+"'")
             elif(status==undefineError):
                 log("id:" + value[0] + " status: undefineError")
-                #sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
-                # send_email_to_master
+                sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
             elif(status==register_success):
                 log("id:"+value[0]+" status: register success")
         # 提交到数据库，真正把数据插入或者更新到数据
         con.commit()
     except Exception as e:
-        print(e)
+        log(e)
         # 发生了异常，回滚
         con.rollback()
     finally:

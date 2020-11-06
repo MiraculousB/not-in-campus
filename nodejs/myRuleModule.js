@@ -34,7 +34,7 @@ module.exports = {
       var http = require("http");
       console.log(responseDetail.response.body.toString());// consume response body
       var datatojson = JSON.parse(responseDetail.response.body.toString());
-      var url = 'http://xxxxxxxx:8080/jsp_work/saveIDToken.jsp?'+'token='+datatojson.data.token+"&id="+datatojson.data.id;
+      var url = 'http://你的云服务器IP:8080/jsp_work/saveIDToken.jsp?'+'token='+datatojson.data.token+"&id="+datatojson.data.id;
       http.get(url, (res) => {
         res.resume();
       }).on('error', (e) => {
