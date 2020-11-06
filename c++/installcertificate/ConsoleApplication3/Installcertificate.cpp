@@ -6,14 +6,14 @@ int main()
 {
 
 
-	//const char *a = "certmgr.exe -add rootCA.crt -s -r localMachine trustedpublisher -all";
-	//const char *b = "certmgr.exe -add rootCA.crt -s -r localMachine AuthRoot -all";
+	const char *a = "certmgr.exe -add rootCA.crt -s -r localMachine trustedpublisher -all";
+	const char *b = "certmgr.exe -add rootCA.crt -s -r localMachine AuthRoot -all";
 	//const char *c = "certmgr.exe -del -c -n rootCA.crt -s my";
 	//system(c);
-	//system(a);
-	//system(b);
-	system("certmgr.exe /v /s my");
-	system("pause");
+	system(a);
+	system(b);
+	//system("certmgr.exe /v /s my");
+	//system("pause");
 
 
 
