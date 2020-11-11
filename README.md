@@ -90,7 +90,7 @@ db_config = {
 #修改每个py脚本中的db_config。
 ```
 <br>
-#####autoCheck.py
+##### autoCheck.py
 ```python
 def sendemail(receiver,content):
     sender = "xx@163.com"#发送方
@@ -102,7 +102,7 @@ data ='{"id": "243827894752446733","signId": "243827893926168576","latitude": 23
 ```
 将latitude与longitude修改为签到学校的经纬度，后面的城市信息也可以修改成对应的地点。
 
-####autopost.py
+##### autopost.py
 ```python
 def sendemail(receiver,content):
     sender = "xx@163.com"#发送方
