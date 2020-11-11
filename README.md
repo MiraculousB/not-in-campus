@@ -11,7 +11,7 @@
 
 ## 使用方法  
 首先需要有一台windows系统的电脑，先打开程序，提示Start catch token后，再打开电脑版的微信小程序我在校园。注意需要从公众号聊天界面中点击学生端打开。从小程序面板中打开会获取不到。  
-![image][doge]  
+![avatar](https://raw.githubusercontent.com/MiraculousB/not-in-campus/master/photo/1.png)
 成功上传时会显示{code:0}等内容。之后需要每隔4天完成一次上传。系统会自动完成一日四检。  
 
 
