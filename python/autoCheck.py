@@ -5,7 +5,7 @@ import pymysql
 import smtplib #smtp服务器
 from email.mime.text import MIMEText #邮件文本
 import urllib.parse
- 
+
 unsign = -10
 register_success = 0
 undefineError = -100
@@ -29,15 +29,9 @@ headers_locate={\
 }
 def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
-<<<<<<< HEAD
     sender = "xx@163.com"#发送方
     recver = receiver #接收方
     password = "口令"
-=======
-    sender = "xxx@163.com"#发送方
-    recver = receiver #接收方
-    password = "xxx"
->>>>>>> 2497626050b424139b18b0097f5e7df26705cb72
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
