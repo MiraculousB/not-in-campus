@@ -79,7 +79,7 @@ String password = "xxx";
 | sendemail | varchar(20)  | NO   |     | 1       |       |
 +-----------+--------------+------+-----+---------+-------+
 ```
-####Python3  
+#### Python3  
 ```
 db_config = {
     'user': 'user',
@@ -90,7 +90,7 @@ db_config = {
 #修改每个py脚本中的db_config。
 ```
 <br>
-##### autoCheck.py
+##### autoCheck.py  
 ```python
 def sendemail(receiver,content):
     sender = "xx@163.com"#发送方
