@@ -89,8 +89,9 @@ db_config = {
 }
 #修改每个py脚本中的db_config。
 ```
-##### autoCheck.py  
+
 ```python
+#autoCheck.py
 def sendemail(receiver,content):
     sender = "xx@163.com"#发送方
     password = "口令"
@@ -101,14 +102,15 @@ data ='{"id": "243827894752446733","signId": "243827893926168576","latitude": 23
 ```
 将latitude与longitude修改为签到学校的经纬度，后面的城市信息也可以修改成对应的地点。
 
-##### autopost.py
 ```python
+#autopost.py
 def sendemail(receiver,content):
     sender = "xx@163.com"#发送方
     password = "口令"
 ```
 注册163邮箱，打开stmp服务，获得口令与用户名并修改。
 ```python
+#autopost.py
 data = "answers=%5B%220%22%5D&seq=xxxxx&temperature=36.5&userId=&latitude=23.090164&longitude=113.354053&country=%E4%B8%AD%E5%9B%BD&city=%E5%B9%BF%E5%B7%9E%E5%B8%82&district=%E6%B5%B7%E7%8F%A0%E5%8C%BA&province=%E5%B9%BF%E4%B8%9C%E7%9C%81&township=%E6%B1%9F%E6%B5%B7%E8%A1%97%E9%81%93&street=%E4%B8%8A%E5%86%B2%E4%B8%AD%E7%BA%A6%E6%96%B0%E8%A1%97%E4%B8%80%E5%B7%B7&myArea="
 ```
 url编码转义，修改经纬度，省市即可。
