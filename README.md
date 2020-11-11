@@ -89,7 +89,6 @@ db_config = {
 }
 #修改每个py脚本中的db_config。
 ```
-<br>
 ##### autoCheck.py  
 ```python
 def sendemail(receiver,content):
