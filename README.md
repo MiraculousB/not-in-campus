@@ -1,7 +1,7 @@
 # 我不在校园
 
 ## 概述  
-我不在校园是由nodejs客户端，Javaee服务端，python服务端脚本，c++编写的动态链接库文件构成的自动签到系统。可以在客户端上传token后自动完成一日四检。客户端内置抓包模块，原理为中间人攻击。  
+我不在校园是由 ~~nodejs客户端~~ C#客户端，Javaee服务端，python服务端脚本，c++编写的动态链接库文件构成的自动签到系统。可以在客户端上传token后自动完成一日四检。客户端内置抓包模块，原理为中间人攻击。  
 
 ## 客户端工作流程  
 第一次打开程序，首先会安装SSL证书并让本机添加信任，使得代理服务器能够解析HTTPS协议的流量。之后调用dll中已经封装好的方法，打开代理服务器并通知其他应用连接代理服务器。连接完成后，开始过滤封包直到获得home.json，获得并上传包头的token，关闭服务器，通知其他应用代理服务器已关闭。  
@@ -15,35 +15,37 @@
 成功上传时会显示{code:0}等内容。之后需要每隔4天完成一次上传。系统会自动完成一日四检。  
 
 ## 已知BUG  
-部分电脑不能抓取https协议的封包，点开学生端后没有反应，仍然显示Start catch token。如果不能使用建议使用其他人电脑上传token。或后续等待更换抓包核心的新版本。  
+~~部分电脑不能抓取https协议的封包，点开学生端后没有反应，仍然显示Start catch token。如果不能使用建议使用其他人电脑上传token。或后续等待更换抓包核心的新版本。~~
+
+## 项目源码
+https://github.com/MiraculousB/not-in-campus
 
 ## 部署教程  
 
 ### 客户端
-首先需要在PC上安装nodejs12，python2.7，Visual studio 2017，myeclipse enterprise  
-在nodejs文件夹中包含有myRuleModule.js，打开后找到以下代码，将url修改为你的对应的服务器IP。  
-之后使用windows命令行全局安装nodejs模块nexe后，对客户端进行打包。
-```javascript
-*beforeSendResponse(requestDetail, responseDetail) {
-  var url = '';
-  if (requestDetail.url.indexOf('https://student.wozaixiaoyuan.com/login/index.json') === 0) {
-    var http = require("http");
-    console.log(responseDetail.response.body.toString());// consume response body
-    var datatojson = JSON.parse(responseDetail.response.body.toString());
-    var url = 'http://你的云服务器IP:8080/jsp_work/saveIDToken.jsp?'+'token='+datatojson.data.token+"&id="+datatojson.data.id;
-    http.get(url, (res) => {
-      res.resume();
-    }).on('error', (e) => {
-      console.log(`Got error: ${e.message}`);
-    });
-    http.get(`http://127.0.0.1:8081/getToken`, (res) => {
-      res.resume();
-    }).on('error', (e) => {
-      console.log(`Got error: ${e.message}`);
-    });
-  }
-  return null;
-},
+首先需要在PC上安装 ~~nodejs12，python2.7~~ .net Framework 4.0，Visual studio 2017，myeclipse enterprise  
+在nodejs文件夹中包含有program.cs，打开后找到以下代码，将url修改为你的对应的服务器IP。  
+```C++
+private static void getIDToken(Session session)
+{
+    String a = "index.json";
+    if (session.fullUrl.IndexOf(a)>=0)
+    {
+        Console.WriteLine(session.GetResponseBodyAsString());
+        Status body = JsonConvert.DeserializeObject<Status>(session.GetResponseBodyAsString());
+        String id = body.data.id;
+        String token = body.data.token;
+        String url = @"http://你的IP:8080/jsp_work/saveIDToken.jsp?id="+id+@"&token="+token;
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        if(response.StatusCode.ToString()=="OK")
+        {
+            Console.WriteLine("上传Token成功");
+            FiddlerApplication.Shutdown();
+
+        }
+    }
+}
 ```
 打开MyEclipse，导入JAVAEE包，找到webroot文件夹中的saveIDToken.jsp。修改以下代码为服务器mysql新增用户的用户名和密码。
 ```java
@@ -79,6 +81,8 @@ String password = "xxx";
 | sendemail | varchar(20)  | NO   |     | 1       |       |
 +-----------+--------------+------+-----+---------+-------+
 ```
+#### Tomcat8
+服务端需要有JDBC驱动，具体百度搜索JDBC LINUX TOMCAT8
 #### Python3  
 ```
 db_config = {
