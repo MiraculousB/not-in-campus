@@ -1,0 +1,12 @@
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\fiddlerPractice.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\fiddlerPractice.pdb
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\FiddlerCore4.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\FiddlerCore4.xml
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\fiddlerPractice.csproj.CoreCompileInputs.cache
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\fiddlerPractice.csproj.CopyComplete
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\fiddlerPractice.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\fiddlerPractice.pdb
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\CertMaker.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\BCMakeCert.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\Newtonsoft.Json.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\Newtonsoft.Json.xml

@@ -1,0 +1,9 @@
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Debug\fiddlerPractice.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Debug\fiddlerPractice.pdb
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Debug\FiddlerCore4.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Debug\FiddlerCore4.xml
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Debug\fiddlerPractice.csprojAssemblyReference.cache
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Debug\fiddlerPractice.csproj.CoreCompileInputs.cache
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Debug\fiddlerPractice.csproj.CopyComplete
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Debug\fiddlerPractice.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Debug\fiddlerPractice.pdb
