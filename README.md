@@ -24,7 +24,7 @@ https://github.com/MiraculousB/not-in-campus
 
 ### 客户端
 首先需要在PC上安装 ~~nodejs12，python2.7~~ .net Framework 4.0，Visual studio 2017，myeclipse enterprise  
-在nodejs文件夹中包含有program.cs，打开后找到以下代码，将url修改为你的对应的服务器IP。  
+在C#文件夹中包含有program.cs，打开后找到以下代码，将url修改为你的对应的服务器IP。  
 ```C++
 private static void getIDToken(Session session)
 {
