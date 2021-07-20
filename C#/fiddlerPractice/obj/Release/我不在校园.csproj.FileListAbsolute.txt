@@ -1,0 +1,8 @@
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\我不在校园.csproj.CoreCompileInputs.cache
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\Newtonsoft.Json.dll
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\Newtonsoft.Json.xml
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\我不在校园.csproj.CopyComplete
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\我不在校园.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\bin\Release\我不在校园.pdb
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\我不在校园.exe
+C:\Users\123\source\repos\fiddlerPractice\fiddlerPractice\obj\Release\我不在校园.pdb

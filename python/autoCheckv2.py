@@ -5,10 +5,14 @@ import pymysql
 import smtplib #smtp服务器
 from email.mime.text import MIMEText #邮件文本
 import urllib.parse
+import datetime
 
 unsign = -10
 register_success = 0
 undefineError = -100
+notintime = -999
+alreadyCheck = -9999
+noCheck = -99999
 
 url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
 url_locate = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
@@ -31,7 +35,7 @@ def sendemail(receiver,content):
     subject = "我不在校园"#邮件标题
     sender = "xx@163.com"#发送方
     recver = receiver #接收方
-    password = "口令"
+    password = "xx"
     message = MIMEText(content,"plain","utf-8")
     #content 发送内容     "plain"文本格式   utf-8 编码格式
     message['Subject'] = subject #邮件标题
@@ -47,7 +51,7 @@ def log(printsrt):
     strday = "RUNLOG-"+time.strftime('%Y-%m-%d', time.localtime(time.time()))+".txt"
     print(strtime + "  " + str(printsrt))
     with open ("/home/autopost/"+strday,"a",encoding='utf-8') as logg:
-        logg.write(strtime+"  "+str(printsrt)+"\n")
+        logg.write("[autoCheckv2]: "+strtime+"  "+str(printsrt)+"\n")
 
 def postFormNightlocate(mysql_token):
     try:
@@ -57,12 +61,28 @@ def postFormNightlocate(mysql_token):
         dict_json = json.loads(res.text)
         if(dict_json['code']==-10):
             return unsign
+        if(len(dict_json['data'])==0):
+            return noCheck
+        starttime = dict_json['data'][0]['start']
+        endtime = dict_json['data'][0]['end']
+        atype = dict_json['data'][0]['type']
+        nowtime=datetime.datetime.now().strftime('%Y-%m-%d %H:%M') 
+        timeArray_starttime = time.strptime(starttime, "%Y-%m-%d %H:%M")
+        timeArray_endtime = time.strptime(endtime, "%Y-%m-%d %H:%M")
+        timeArray_nowtime = time.strptime(nowtime, "%Y-%m-%d %H:%M")
+        timeStamp_starttime = int(time.mktime(timeArray_starttime))
+        timeStamp_endtime = int(time.mktime(timeArray_endtime))
+        timeStamp_nowtime = int(time.mktime(timeArray_nowtime))
         id= dict_json["data"][0]["logId"]
         signid= dict_json["data"][0]["id"]
         #print(id,signid)
         realdata = data.replace("243827894752446733",id)
         realdata = realdata.replace("243827893926168576",signid)
         realdata = str(realdata).encode('utf-8')
+        if not (timeStamp_starttime<timeStamp_nowtime and timeStamp_nowtime<timeStamp_endtime):
+            return notintime
+        if(str(atype)=='1'):
+            return alreadyCheck
     except Exception as e:
         log(e)
     try:
@@ -96,13 +116,22 @@ def main():
         for value in values:
             status = postFormNightlocate(value[1])
             if(status==unsign):
-                log("id:" + value[0] + " status: token outdated")
                 if(value[3]=='1'):
-                    sendemail(value[2],"Token信息已过期，请及时更新, 注意上传token时等待脚本自动退出，否则可能上传失败")
+                    log("id:" + value[0] + " status: sendemail succeed")
+                    sendemail(value[2],r"Token信息已过期，请及时更新。最新版本的客户端在ftp://172.27.183.4/下载，需要连接校园网。")
                     cur.execute("update stu_info set sendemail="+"'"+"0"+"'"+"where sno="+"'"+value[0]+"'")
+            elif(status==noCheck):
+                #log("id:" + value[0] + " status: noCheck")
+                pass
+            elif(status==alreadyCheck):
+                #log("id:" + value[0] + " status: alreadyCheck")
+                pass
+            elif(status==notintime):
+                #log("id:" + value[0] + " status: notintime")
+                pass
             elif(status==undefineError):
                 log("id:" + value[0] + " status: undefineError")
-                sendemail("45567119@qq.com",str(value[0])+"出现未知错误")
+                sendemail("xx@qq.com",str(value[0])+"出现未知错误")
             elif(status==register_success):
                 log("id:"+value[0]+" status: register success")
         # 提交到数据库，真正把数据插入或者更新到数据
